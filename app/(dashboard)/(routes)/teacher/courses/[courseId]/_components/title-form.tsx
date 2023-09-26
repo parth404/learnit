@@ -4,6 +4,10 @@ import * as z from "zod";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Pencil, X } from "lucide-react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 import {
   Form,
@@ -14,15 +18,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
-import { useState } from "react";
 
-type Props = {
+interface TitleFormProps {
   initialData: {
     title: string;
   };
   courseId: string;
-};
+}
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -30,8 +32,10 @@ const formSchema = z.object({
   }),
 });
 
-const TitleForm = ({ initialData, courseId }: Props) => {
+const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
+
+  const router = useRouter();
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
@@ -43,15 +47,23 @@ const TitleForm = ({ initialData, courseId }: Props) => {
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      await axios.patch(`/api/courses/${courseId}`, values);
+      toast.success("Course updated");
+      toggleEdit();
+      router.refresh();
+    } catch {
+      toast.error("Something went wrong");
+    }
   };
+
   return (
     <div className="mt-6 border bg-slate-50 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Course title
         <Button variant="ghost" onClick={toggleEdit}>
           {isEditing ? (
-            <>Cancel</>
+            <X className="h-4 w-4 mr-2" />
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
@@ -76,6 +88,7 @@ const TitleForm = ({ initialData, courseId }: Props) => {
                     <Input
                       disabled={isSubmitting}
                       placeholder="e.g. 'Advanced web development'"
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
