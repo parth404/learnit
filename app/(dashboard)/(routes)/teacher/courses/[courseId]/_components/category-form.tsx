@@ -16,23 +16,22 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Course } from "@prisma/client";
+import Combobox from "@/components/ui/combobox";
 
 type props = {
-  initialData: {
-    title: string;
-  };
+  initialData: Course;
   courseId: string;
+  options: { label: string; value: string }[];
 };
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required",
-  }),
+  categoryId: z.string().min(1),
 });
 
-const TitleForm = ({ initialData, courseId }: props) => {
+const CategoryForm = ({ initialData, courseId, options }: props) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const router = useRouter();
@@ -41,7 +40,7 @@ const TitleForm = ({ initialData, courseId }: props) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: { categoryId: initialData?.categoryId || "" },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -57,10 +56,14 @@ const TitleForm = ({ initialData, courseId }: props) => {
     }
   };
 
+  const selectedOption = options.find(
+    (option) => option.value === initialData.categoryId
+  );
+
   return (
     <div className="mt-6 border bg-slate-50 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course title
+        Course category
         <Button variant="ghost" className="pr-0" onClick={toggleEdit}>
           {isEditing ? (
             <X className="h-4 w-4" />
@@ -72,7 +75,14 @@ const TitleForm = ({ initialData, courseId }: props) => {
         </Button>
       </div>
       {!isEditing ? (
-        <p className="text-sm mt-2">{initialData.title}</p>
+        <p
+          className={cn(
+            "text-sm mt-2",
+            !initialData.categoryId && "text-muted-foreground italic"
+          )}
+        >
+          {selectedOption?.label || "No category"}
+        </p>
       ) : (
         <Form {...form}>
           <form
@@ -81,15 +91,11 @@ const TitleForm = ({ initialData, courseId }: props) => {
           >
             <FormField
               control={form.control}
-              name="title"
+              name="categoryId"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
-                      {...field}
-                    />
+                    <Combobox options={...options} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -107,4 +113,4 @@ const TitleForm = ({ initialData, courseId }: props) => {
   );
 };
 
-export default TitleForm;
+export default CategoryForm;

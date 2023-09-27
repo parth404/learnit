@@ -61,12 +61,12 @@ const DescriptionForm = ({ initialData, courseId }: props) => {
     <div className="mt-6 border bg-slate-50 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Course description
-        <Button variant="ghost" onClick={toggleEdit}>
+        <Button variant="ghost" className="pr-0" onClick={toggleEdit}>
           {isEditing ? (
-            <X className="h-4 w-4 mr-2" />
+            <X className="h-4 w-4" />
           ) : (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
+              <Pencil className="h-4 w-4" />
             </>
           )}
         </Button>

@@ -45,14 +45,12 @@ const ImageForm = ({ initialData, courseId }: props) => {
     <div className="mt-6 border bg-slate-50 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Course image
-        <Button onClick={toggleEdit} variant="ghost">
+        <Button onClick={toggleEdit} variant="ghost" className="pr-0">
           {isEditing && <X className="h-4 w-4 mr-2" />}
           {!isEditing && !initialData.imageUrl && (
-            <PlusCircle className="h-4 w-4 mr-2" />
+            <PlusCircle className="h-4 w-4" />
           )}
-          {!isEditing && initialData.imageUrl && (
-            <Pencil className="h-4 w-4 mr-2" />
-          )}
+          {!isEditing && initialData.imageUrl && <Pencil className="h-4 w-4" />}
         </Button>
       </div>
       {!isEditing &&
