@@ -1,25 +1,28 @@
 import { auth } from "@clerk/nextjs";
 import { Chapter, Course, UserProgress } from "@prisma/client";
 import { redirect } from "next/navigation";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { db } from "@/lib/db";
 import { CourseProgress } from "@/components/course-progress";
 
 import { CourseSidebarItem } from "./course-sidebar-item";
 
-interface CourseSidebarProps {
+type props = {
   course: Course & {
     chapters: (Chapter & {
       userProgress: UserProgress[] | null;
     })[];
   };
   progressCount: number;
-}
+};
 
-export const CourseSidebar = async ({
-  course,
-  progressCount,
-}: CourseSidebarProps) => {
+export const CourseSidebar = async ({ course, progressCount }: props) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -37,8 +40,19 @@ export const CourseSidebar = async ({
 
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
-      <div className="p-8 flex flex-col border-b">
-        <h1 className="font-semibold">{course.title}</h1>
+      <div className="p-6 flex flex-col border-b text-primary">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <h1 className="font-semibold md:text-2xl truncate ...">
+                {course.title}
+              </h1>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{course.title}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         {purchase && (
           <div className="mt-10">
             <CourseProgress variant="success" value={progressCount} />

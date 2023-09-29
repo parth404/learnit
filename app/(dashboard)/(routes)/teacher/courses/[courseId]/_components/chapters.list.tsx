@@ -93,7 +93,7 @@ export const ChaptersList = ({ items, onReorder, onEdit }: Props) => {
                     >
                       <Grip className="h-5 w-5" />
                     </div>
-                    {chapter.title}
+                    <div className="truncate ...">{chapter.title}</div>
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
                       {chapter.isFree && (
                         <Badge className="bg-lime-700 text-white hover:bg-lime-400 hover:text-lime-800">
