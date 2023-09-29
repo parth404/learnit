@@ -64,13 +64,12 @@ export async function PATCH(
   try {
     const { userId } = auth();
     const { courseId } = params;
-    console.log("req", req);
     const values = await req.json();
-    console.log("values", values);
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+
     const course = await db.course.update({
       where: {
         id: courseId,
