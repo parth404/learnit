@@ -76,18 +76,18 @@ export const ChaptersList = ({ items, onReorder, onEdit }: Props) => {
                 {(provided) => (
                   <div
                     className={cn(
-                      "flex items-center gap-x-2 bg-slate-200 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm",
+                      "group flex items-center gap-x-2 bg-slate-200 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm",
                       chapter.isPublished &&
-                        "bg-lime-100 border-lime-200 text-lime-800"
+                        "bg-lime-600 border-lime-200 text-white hover:bg-lime-800"
                     )}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                   >
                     <div
                       className={cn(
-                        "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition",
+                        "group px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition",
                         chapter.isPublished &&
-                          "border-r-sky-200 hover:bg-sky-200"
+                          "border-r-lime-100 group-hover:bg-lime-800"
                       )}
                       {...provided.dragHandleProps}
                     >
@@ -95,11 +95,16 @@ export const ChaptersList = ({ items, onReorder, onEdit }: Props) => {
                     </div>
                     {chapter.title}
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
-                      {chapter.isFree && <Badge>Free</Badge>}
+                      {chapter.isFree && (
+                        <Badge className="bg-lime-700 text-white hover:bg-lime-400 hover:text-lime-800">
+                          Free
+                        </Badge>
+                      )}
                       <Badge
                         className={cn(
                           "bg-slate-500",
-                          chapter.isPublished && "bg-lime-800"
+                          chapter.isPublished &&
+                            "bg-white text-lime-700 hover:bg-lime-400 hover:text-lime-800"
                         )}
                       >
                         {chapter.isPublished ? "published" : "Draft"}
