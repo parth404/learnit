@@ -8,8 +8,8 @@ type props = {
 };
 
 const colorByVariant = {
-  default: "text-sky-700",
-  success: "text-emerald-700",
+  default: "text-slate-700",
+  success: "text-lime-800",
 };
 
 const sizeByVariant = {
@@ -23,7 +23,7 @@ export const CourseProgress = ({ value, variant, size }: props) => {
       <Progress className="h-2" value={value} variant={variant} />
       <p
         className={cn(
-          "font-medium mt-2 text-sky-700",
+          "font-medium mt-2 text-lime-800",
           colorByVariant[variant || "default"],
           sizeByVariant[size || "default"]
         )}

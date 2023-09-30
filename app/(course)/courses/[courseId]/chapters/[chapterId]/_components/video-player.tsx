@@ -10,7 +10,7 @@ import { Loader2, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 
-interface VideoPlayerProps {
+type props = {
   playbackId: string;
   courseId: string;
   chapterId: string;
@@ -18,7 +18,7 @@ interface VideoPlayerProps {
   isLocked: boolean;
   completeOnEnd: boolean;
   title: string;
-}
+};
 
 export const VideoPlayer = ({
   playbackId,
@@ -28,7 +28,7 @@ export const VideoPlayer = ({
   isLocked,
   completeOnEnd,
   title,
-}: VideoPlayerProps) => {
+}: props) => {
   const [isReady, setIsReady] = useState(false);
   const router = useRouter();
   const confetti = useConfettiStore();

@@ -7,15 +7,12 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
 
-interface CourseEnrollButtonProps {
+type props = {
   price: number;
   courseId: string;
-}
+};
 
-export const CourseEnrollButton = ({
-  price,
-  courseId,
-}: CourseEnrollButtonProps) => {
+export const CourseEnrollButton = ({ price, courseId }: props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {

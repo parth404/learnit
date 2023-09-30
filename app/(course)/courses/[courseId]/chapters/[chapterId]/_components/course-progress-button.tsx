@@ -9,19 +9,19 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 
-interface CourseProgressButtonProps {
+type props = {
   chapterId: string;
   courseId: string;
   isCompleted?: boolean;
   nextChapterId?: string;
-}
+};
 
 export const CourseProgressButton = ({
   chapterId,
   courseId,
   isCompleted,
   nextChapterId,
-}: CourseProgressButtonProps) => {
+}: props) => {
   const router = useRouter();
   const confetti = useConfettiStore();
   const [isLoading, setIsLoading] = useState(false);
