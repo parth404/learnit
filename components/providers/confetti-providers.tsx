@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import ReactConfetti from "react-confetti";
 
 import { useConfettiStore } from "@/hooks/use-confetti-store";

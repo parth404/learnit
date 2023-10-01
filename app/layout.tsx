@@ -4,7 +4,8 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import ToasterProvider from "@/components/providers/toaster-provider";
 import { ConfettiProvider } from "@/components/providers/confetti-providers";
-import NextProgressProvider from "@/components/providers/nextProgress-provider";
+import NextTopLoader from "nextjs-toploader";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,10 +24,12 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <ConfettiProvider />
-          <ToasterProvider />
-          <NextProgressProvider />
-          {children}
+          <NextTopLoader color="#4DB300" height={6} showSpinner={false} />
+          <Suspense fallback={<p>Loading weather...</p>}>
+            <ConfettiProvider />
+            <ToasterProvider />
+            {children}
+          </Suspense>
         </body>
       </html>
     </ClerkProvider>
