@@ -1,4 +1,3 @@
-import NextProgressProvider from "@/components/providers/nextProgress-provider";
 import { Navbar } from "./_components/navbar";
 import Sidebar from "./_components/sidebar";
 

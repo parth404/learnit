@@ -6,6 +6,7 @@ import ToasterProvider from "@/components/providers/toaster-provider";
 import { ConfettiProvider } from "@/components/providers/confetti-providers";
 import NextTopLoader from "nextjs-toploader";
 import { Suspense } from "react";
+import LoadingPage from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <NextTopLoader color="#4DB300" height={6} showSpinner={false} />
-          <Suspense fallback={<p>Loading weather...</p>}>
+          <Suspense fallback={<LoadingPage />}>
             <ConfettiProvider />
             <ToasterProvider />
             {children}
