@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={`${inter.className} bg-gray-50 text-gray-950`}>
           <NextTopLoader color="#4DB300" height={6} showSpinner={false} />
           <Suspense fallback={<LoadingPage />}>
             <ConfettiProvider />
